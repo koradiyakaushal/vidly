@@ -1,73 +1,41 @@
+const config = require('config');
 const express = require('express');
 const Joi = require('joi');
-
+const logger = require('./middleware/logger');
 const app = express();
+const helmet = require("helmet");
+const morgan = require('morgan');
+const genres = require('./routes/genres');
+const customers = require('./routes/customers');
+const home = require('./routes/home');
+const mongoose = require('mongoose');
+
+// process.env.NODE_ENV
+// console.log(app.get('env'))
+
+// console.log(config.get('name'));
+// console.log(config.get('mail.host'));
+
+app.set('view engine', 'pug');
+app.set('views', './views'); //default
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(helmet());
 
-const genres = [
-    { id: 1, name: 'pop'},
-    { id: 2, name: 'hip'},
-    { id: 3, name: 'rap'},
-    { id: 4, name: 'lofi'},
-    { id: 5, name: 'culture'}
-]
+app.use('/', home);
+app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 
-app.get('/api/genres/', (req, res) => {
-    res.send(genres);
-});
-
-app.get('/api/genres/:id', (req, res) => {
-    const genre = genres.find((c) => { return c.id === parseInt(req.params.id) });
-    if (!genre) return res.send(404, "Not found")
-
-    res.send(genre);
-});
-
-app.post('/api/genres', (req, res) => {
-    const { error } = validateGenres(req.body);
-    if (error) {
-        res.send(400, error);
-        console.log(error);
-        return;
-    }
-    const genre = {id : genres.length + 1, name: req.body.name}
-    genres.push(genre);
-    return res.send(genre);
-
-});
-
-app.put('/api/genres/:id', (req, res) => {
-    let genre = genres.find((c) => { return c.id === parseInt(req.params.id) });
-    if (!genre) return res.send(404, "Not found")
-    
-    const { error } = validateGenres(req.body);
-    if (error) {
-        res.send(400, error);
-        console.log(error);
-        return;
-    }
-
-    genre.name = req.body.name
-    return res.send(genre);
-
-})
-
-app.delete('/api/genres/:id', (req, res) => {
-    let genre = genres.find((c) => { return c.id === parseInt(req.params.id) });
-    if (!genre) return res.send(404, "Not found")
-
-    const index = genres.indexOf(genre);
-    genres.splice(index, 1)
-    return res.send(genre);
-});
-
-function validateGenres(genre){
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
-    });
-    return schema.validate(genre);
-};
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    console.log('morgan is enabled...')
+    mongoose.connect('mongodb://localhost/vidly')
+        .then(() => console.log('connected to mongodb'))
+        .catch((err) => console.log(err.message));
+}
+app.use(logger);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => { console.log("Server listening request on port 3000...") })
