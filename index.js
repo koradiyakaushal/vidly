@@ -1,6 +1,7 @@
 const config = require('config');
 const express = require('express');
 const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const logger = require('./middleware/logger');
 const app = express();
 const helmet = require("helmet");
