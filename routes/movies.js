@@ -3,6 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose');
 const { Movie, validate } = require('../models/movie');
 const { Genre } = require('../models/movie');
+const auth = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
     const movies = await Movie.find().sort("name");

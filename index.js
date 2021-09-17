@@ -8,8 +8,18 @@ const helmet = require("helmet");
 const morgan = require('morgan');
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
+const rentals = require('./routes/rentals');
+const movies = require('./routes/movies');
+const users = require('./routes/users');
+const auth = require('./routes/auth');
 const home = require('./routes/home');
 const mongoose = require('mongoose');
+
+if (!config.get('jwtPrivateKey')) {
+    console.error('FATAL Error: jwtkey not provided');
+    config['jwtPrivateKey'] = 'jwtkey';
+    // process.exit(1); 
+}
 
 // process.env.NODE_ENV
 // console.log(app.get('env'))
@@ -20,6 +30,8 @@ const mongoose = require('mongoose');
 app.set('view engine', 'pug');
 app.set('views', './views'); //default
 
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -28,6 +40,10 @@ app.use(helmet());
 app.use('/', home);
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
+app.use('/api/users', users);
+app.use('/api/movies', movies);
+app.use('/api/rentals', rentals);
+app.use('/api/auth', auth);
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));

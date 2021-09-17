@@ -1,44 +1,47 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
+const customerScehma = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+    },
+    isGold: {
+        type: Boolean,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+    }
+})
+
 const Rental = mongoose.model('Rental', new mongoose.Schema({
     customer: {
-        type: new mongoose.schema({
-            name: {
-                type: String,
-                required: true,
-                minlength: 5,
-                maxlength: 50
-            },
-            isGold: {
-                type: Boolean,
-                required: true
-            },
-            phone: {
-                type: String,
-                required: true,
-                minlength: 5,
-                maxlength: 50
-            }
-        }),
+        type: customerScehma,
         required: true
     },
     movie: {
-        type: new mongoose.schema({
-            title: String,
-            required: true,
-            trim: true,
-            minlength: 5,
-            maxlength: 255
-        },
-        dailyRentalRate: {
-            type: Number,
-            required: true,
-            min: 0,
-            max: 255
-        },
+        type: new mongoose.Schema({
+            title:{
+                type: String,
+                required: true,
+                trim: true,
+                minlength: 5,
+                maxlength: 255
+            },
+            dailyRentalRate: {
+                type: Number,
+                required: true,
+                min: 0,
+                max: 255
+            }
+        }),
         required: true
-        )
     },
     dateOut: {
         type: Date,

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router()
 const mongoose = require('mongoose');
 const { Customer, validate } = require('../models/customer');
+const auth = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
     const customers = await Customer.find().sort("name");

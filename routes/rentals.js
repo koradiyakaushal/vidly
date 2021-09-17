@@ -5,8 +5,9 @@ const Fawn = require('fawn');
 const { Rental, validate } = require('../models/rental');
 const { Movie } = require('../models/movie');
 const { Customer } = require('../models/customer');
+const auth = require('../middleware/auth');
 
-Fawn.init(mongoose);
+// Fawn.init(mongoose);
 
 router.get('/', async (req, res) => {
     const rentals = await Rental.find().sort("-dateOut");
@@ -56,24 +57,24 @@ router.post('/', async (req, res) => {
     })
 
     // transaction
-    try {
-        new Fawn.Task()
-            .save('rentals', rental)
-            .update('movies', {_id: movie._id}, {
-                $inc: { numberInStock: -1}
-            })
-            .run();
+    // try {
+    //     new Fawn.Task()
+    //         .save('rentals', rental)
+    //         .update('movies', {_id: movie._id}, {
+    //             $inc: { numberInStock: -1}
+    //         })
+    //         .run();
             
-        return res.send(rental);
-    }
-    catch(ex){
-        res.status(500).send('Something failed.');
-    }
+    //     return res.send(rental);
+    // }
+    // catch(ex){
+    //     res.status(500).send('Something failed.');
+    // }
 
-    // rental = await rental.save();
+    rental = await rental.save();
 
-    // movie.numberInStock--;
-    // movie.save();
+    movie.numberInStock--;
+    movie.save();
 
 });
 

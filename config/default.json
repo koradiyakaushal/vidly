@@ -1,3 +1,4 @@
 {
-    "name": "Vidly"
+    "name": "Vidly",
+    "jwtPrivateKey" : ""
 }
