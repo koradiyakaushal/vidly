@@ -20,11 +20,11 @@ module.exports = function() {
 
     process.on('unhandledRejection', (ex) => {
         throw ex;
-        // winston.error(ex.message, ex);
+        winston.error(ex.message, ex);
         // process.exit(1);
     })
 
     winston.add(new winston.transports.File({ filename : 'logfile.log'}));
-    // winston.add(new winston.transports.MongoDB({ db: 'mongodb://localhost/vidlylogs', level: 'error' }));
+    winston.add(new winston.transports.MongoDB({ db: 'mongodb://localhost/vidlylogs', level: 'error' }));
 
 };

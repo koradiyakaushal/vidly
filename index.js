@@ -11,5 +11,5 @@ require('./startup/validation')();
 app.set('view engine', 'pug');
 app.set('views', './views'); //default
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 app.listen(port, () => { winston.info("Server listening request on port 3000...") })

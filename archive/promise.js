@@ -1,18 +1,18 @@
 
 // async version
-// function callbackexmaple(user, callback){
-//     setTimeout(() => {
-//         console.log(user)
-//         callback(1)
-//     }, 2000);
-// }
+function callbackexmaple(user, callback){
+    setTimeout(() => {
+        console.log(user)
+        callback(1)
+    }, 2000);
+}
 
-// callbackexmaple("testuser", (id) => {
-//     console.log(id);
-// })
+callbackexmaple("testuser", (id) => {
+    console.log(id);
+})
 
-//sync version
-// callbackexmaple('testuser')
+// sync version
+callbackexmaple('testuser')
 
 
 const p = new Promise((resolve, reject) => {
