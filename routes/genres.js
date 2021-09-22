@@ -3,13 +3,14 @@ const router = express.Router()
 const mongoose = require('mongoose');
 const { Genre, validate } = require('../models/genre');
 const auth = require('../middleware/auth');
+const validateObjectId = require('../middleware/validateObjectId');
 
 router.get('/', async (req, res) => {
     const genres = await Genre.find().sort("name");
     res.send(genres);
 });
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
     let genre = await Genre.findById(req.params.id)
     if (!genre) return res.send(404, "Not found")
 
@@ -20,7 +21,7 @@ router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body);
     if (error) {
         res.send(400, error);
-        console.log(error);
+        // console.log(error);
         return;
     }
     let genre = new Genre({name: req.body.name})
