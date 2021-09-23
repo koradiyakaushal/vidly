@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', validateObjectId, async (req, res) => {
     let genre = await Genre.findById(req.params.id)
-    if (!genre) return res.send(404, "Not found")
+    if (!genre) return res.status(404).send("Not found")
 
     res.send(genre);
 });
@@ -20,7 +20,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body);
     if (error) {
-        res.send(400, error);
+        res.status(400).send(error);
         // console.log(error);
         return;
     }
@@ -32,13 +32,13 @@ router.post('/', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
     const { error } = validate(req.body);
     if (error) {
-        res.send(400, error);
+        res.status(400).send(error);
         // console.log(error);
         return;
     }
 
     let genre = await Genre.findByIdAndUpdate(req.params.id, {name: req.body.name}, {new: true})
-    if (!genre) return res.send(404, "Not found")
+    if (!genre) return res.status(404).send("Not found")
 
     return res.status(200).send(genre);
 
@@ -47,7 +47,7 @@ router.put('/:id', auth, async (req, res) => {
 router.delete('/:id', validateObjectId, auth, async (req, res) => {
     let genre = await Genre.findByIdAndRemove(req.params.id)
 
-    if (!genre) return res.send(404, "Not found")
+    if (!genre) return res.status(404).send("Not found")
 
     return res.status(200).send(genre);
 });

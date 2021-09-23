@@ -9,6 +9,7 @@ const movies = require('../routes/movies');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
 const home = require('../routes/home');
+const returns = require('../routes/returns');
 
 
 module.exports = function (app){
@@ -24,6 +25,7 @@ module.exports = function (app){
     app.use('/api/movies', movies);
     app.use('/api/rentals', rentals);
     app.use('/api/auth', auth);
+    app.use('/api/return', returns);
 
     app.use(error);
 };
