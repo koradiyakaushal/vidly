@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const joi = require('Joi');
+const Joi = require('joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
@@ -28,9 +28,9 @@ router.post('/', async (req, res) => {
 });
 
 function validate(req){
-    const schema = joi.object({
-        email: joi.string().min(5).required().email(),
-        password: joi.string().min(5).required()
+    const schema = Joi.object({
+        email: Joi.string().min(5).required().email(),
+        password: Joi.string().min(5).required()
     });
     return schema.validate(req);
 };
