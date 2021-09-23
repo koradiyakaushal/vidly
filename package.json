@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose --forceExit --maxWorkers=1"
   },
   "keywords": [],
   "author": "",
