@@ -25,6 +25,8 @@ module.exports = function() {
     })
 
     winston.add(new winston.transports.File({ filename : 'logfile.log'}));
+    winston.add(new winston.transports.Console({ colorize: true, prettyPrint: true }));
+
     // winston.add(new winston.transports.MongoDB({ db: 'mongodb://localhost/vidlylogs', level: 'error' }));
 
 };

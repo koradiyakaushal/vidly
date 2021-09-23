@@ -3,5 +3,6 @@
         "password": "app_password"
     },
     "jwtPrivateKey" : "vidly_jwtPrivateKey",
-    "nodeEnv": "vidly_node_env"
+    "nodeEnv": "vidly_node_env",
+    "db": "vidly_db"
 }
