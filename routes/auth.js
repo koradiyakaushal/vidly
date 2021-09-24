@@ -9,9 +9,7 @@ const { User } = require('../models/user');
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
     if (error) {
-        res.send(400, error);
-        console.log(error);
-        return;
+        return res.status(400).send(error);
     }
     
     let user = await User.findOne({email: req.body.email});
@@ -23,7 +21,7 @@ router.post('/', async (req, res) => {
     if (!validPassword) return res.status(400).send("Invalid email or password")
 
     const token = user.generateAuthToken();
-    return res.send(token);
+    return res.status(200).send(token);
 
 });
 

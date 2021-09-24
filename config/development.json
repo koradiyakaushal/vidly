@@ -2,5 +2,6 @@
     "name": "Vidly Dev",
     "mail": {
         "host": "dev-mail-server"
-    }
+    },
+    "jwtPrivateKey" : "randomkey"
 }

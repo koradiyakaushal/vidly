@@ -1,4 +1,4 @@
-const { User } = require('../../models/user');
+const { User } = require('../../../models/user');
 const request = require('supertest');
 
 let server;
@@ -9,7 +9,7 @@ describe('user register', () => {
     let password;
 
     beforeEach(() => { 
-        server = require('../../index');
+        server = require('../../../index');
         email = "test@gmail.com"
         name = "abcdefg"
         password = "abcdefghijkl"
