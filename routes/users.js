@@ -20,11 +20,7 @@ const auth = require('../middleware/auth');
 
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
-    if (error) {
-        res.status(400).send(error);
-        // console.log(error);
-        return;
-    }
+    if (error) { return res.status(400).send(error); }
     
     let user = await User.findOne({email: req.body.email});
     if (user) return res.status(400).send("user already registered")
@@ -44,7 +40,7 @@ router.post('/', async (req, res) => {
 // router.put('/:id', async (req, res) => {
 //     const { error } = validate(req.body);
 //     if (error) {
-//         res.send(400, error);
+//         res.status(400).send(error);
 //         console.log(error);
 //         return;
 //     }

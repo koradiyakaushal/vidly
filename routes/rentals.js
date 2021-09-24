@@ -23,11 +23,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
-    if (error) {
-        res.send(400, error);
-        console.log(error);
-        return;
-    }
+    if (error) { return res.status(400).send(error); }
 
     const customer = await Customer.findById(req.body.customerId);
     if (!customer) {
@@ -80,11 +76,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { error } = validate(req.body);
-    if (error) {
-        res.send(400, error);
-        console.log(error);
-        return;
-    }
+    if (error) { return res.status(400).send(error); }
 
     const customer = await Customer.findById(req.body.customerId);
     if (!customer) {
