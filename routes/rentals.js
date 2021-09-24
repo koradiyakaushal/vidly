@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     let rental = await Rental.findById(req.params.id)
-    if (!rental) return res.send(404, "Not found")
+    if (!rental) return res.status(404).send("Not found")
 
     res.send(rental);
 });
@@ -27,13 +27,13 @@ router.post('/', async (req, res) => {
 
     const customer = await Customer.findById(req.body.customerId);
     if (!customer) {
-        res.send(400, 'Invalid customer');
+        res.status(400).send('Invalid customer');
         return;
     }
 
     const movie = await Movie.findById(req.body.movieId);
     if (!movie) {
-        res.send(400, 'Invalid Movie');
+        res.status(400).send('Invalid Movie');
         return;
     }
 
@@ -80,13 +80,13 @@ router.put('/:id', async (req, res) => {
 
     const customer = await Customer.findById(req.body.customerId);
     if (!customer) {
-        res.send(400, 'Invalid customer');
+        res.status(400).send('Invalid customer');
         return;
     }
 
     const movie = await Movie.findById(req.body.movieId);
     if (!movie) {
-        res.send(400, 'Invalid Movie');
+        res.status(400).send('Invalid Movie');
         return;
     }
 
@@ -105,7 +105,7 @@ router.put('/:id', async (req, res) => {
         },
     }, {new: true})
 
-    if (!rental) return res.send(404, "Not found")
+    if (!rental) return res.status(404).send("Not found")
 
     return res.send(rental);
 
@@ -114,7 +114,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     let rental = await Rental.findByIdAndRemove(req.params.id)
 
-    if (!rental) return res.send(404, "Not found")
+    if (!rental) return res.status(404).send("Not found")
 
     return res.send(rental);
 });

@@ -15,6 +15,6 @@ app.set('view engine', 'pug');
 app.set('views', './views'); //default
 
 const port = process.env.PORT || 3000;
-const server = app.listen(port, () => { winston.info("Server listening request on port 3000...") });
+const server = app.listen(port, () => console.log("Server listening request on port 3000..."));
 
 module.exports = server;
