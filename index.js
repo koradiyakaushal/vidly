@@ -10,6 +10,8 @@ require('./startup/config')();
 require('./startup/validation')();
 require('./startup/prod')(app);
 
+console.log('test');
+
 app.use(morgan('combined'))
 app.set('view engine', 'pug');
 app.set('views', './views'); //default
